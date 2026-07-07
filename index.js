@@ -5,7 +5,6 @@ const DISCORD_TOKEN = process.env.DISCORD_TOKEN;
 const CHANNEL_ID = process.env.CHANNEL_ID;
 const GENERAL_CHANNEL_ID = process.env.ANNOUNCEMENT_CHANNEL_ID || process.env.GENERAL_CHANNEL_ID || '';
 const LEADERS_CHANNEL_ID = process.env.LEADERS_CHANNEL_ID || '';
-const LS_NAME = process.env.LS_NAME || 'Fun Linkshell';
 const LS_ID = process.env.LS_ID || '303';
 const REFRESH_SECONDS = Number(process.env.REFRESH_SECONDS || 60);
 const COOKIE_HEADER = process.env.CATSEYE_COOKIE_HEADER || '';
@@ -272,7 +271,7 @@ function buildDashboard(overview, members) {
   else if (penalty === 0) statusLine = '🔥 PUSH WEEK ACTIVE';
 
   const header = [
-    `🏆 **${LS_NAME.toUpperCase()} AP BOARD**`,
+    '🏆 **SUPERNOVA AP BOARD**',
     '```',
     centerText(`RANK #${rank}`, 44),
     centerText(statusLine, 44),
@@ -304,7 +303,7 @@ async function findExistingDashboard(channel) {
   // Search recent bot messages and keep the newest dashboard. This prevents duplicate spam after redeploys.
   const messages = await channel.messages.fetch({ limit: 100 });
   const dashboards = messages
-    .filter(m => m.author.id === client.user.id && m.content.includes('AP BOARD'))
+    .filter(m => m.author.id === client.user.id && m.content.includes('SUPERNOVA AP BOARD'))
     .sort((a, b) => b.createdTimestamp - a.createdTimestamp);
 
   const newest = dashboards.first();
@@ -457,7 +456,7 @@ async function maybeSendPhaseAnnouncement(overview, parts) {
       const sent = await sendGeneralOnce(key, [
         '📢 **PUSH WEEK REMINDER**',
         '',
-        'Fun Linkshell is currently at **5% penalty**.',
+        'SuperNova is currently at **5% penalty**.',
         '',
         'After the next Sunday reset, our penalty will become **0%**.',
         '',
@@ -527,7 +526,7 @@ function isAfterSundayResetWindow(date = new Date()) {
 async function channelAlreadyHasWeeklyResult(channel, key) {
   try {
     const messages = await channel.messages.fetch({ limit: 50 });
-    return messages.some(m => m.author.id === client.user.id && m.content.includes('🏆 **WE DID IT, FUN LINKSHELL!** 🏆') && m.content.includes(`📅 ${key}`));
+    return messages.some(m => m.author.id === client.user.id && m.content.includes('🏆 **WE DID IT, SUPERNOVA!** 🏆') && m.content.includes(`📅 ${key}`));
   } catch (_) {
     return false;
   }
@@ -559,7 +558,7 @@ async function maybeSendVictoryMessage(overview, parts) {
 
     const msg = [
       '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
-      `🏆 **WE DID IT, ${LS_NAME.toUpperCase()}!** 🏆`
+      '🏆 **WE DID IT, SUPERNOVA!** 🏆',
       `📅 ${key}`,
       '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
       '',

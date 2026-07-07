@@ -1,17 +1,21 @@
-# LS AP Report Bot v1.3
+# LS AP Report Bot v1.3 - SuperNova
 
-Fixes:
-- Keeps the correct 25% Farm Week header after Rank #1.
-- Keeps the two-column member AP list.
-- Removes `left` and `...and X more`.
+This version is hard-coded for the Linkshell name:
 
-Optional Render variables:
-- `SUMMIT_PHASE_START=2026-07-05` controls the current cycle start date.
-- `FORCE_PENALTY=25` can manually override if needed.
+- SuperNova
 
-Deploy:
-Upload files to GitHub, commit, then Render > Manual Deploy > Deploy latest commit.
+Render variables still required:
+- DISCORD_TOKEN
+- CHANNEL_ID
+- ANNOUNCEMENT_CHANNEL_ID
+- LEADERS_CHANNEL_ID
+- LS_ID
+- CATSEYE_COOKIE_HEADER
+- REFRESH_SECONDS=60
+- WEEKLY_CAP=70000
+- NEAR_CAP=50000
+- SUMMIT_PHASE_START=2026-07-05
 
-
-New environment variable:
-- LS_NAME=SuperNova (or any Linkshell name)
+Important:
+- LS_ID controls which CatsEye linkshell data the bot fetches.
+- The display name is now changed in the code to SuperNova.
