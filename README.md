@@ -11,3 +11,7 @@ Optional Render variables:
 
 Deploy:
 Upload files to GitHub, commit, then Render > Manual Deploy > Deploy latest commit.
+
+
+New environment variable:
+- LS_NAME=SuperNova (or any Linkshell name)

@@ -5,6 +5,7 @@ const DISCORD_TOKEN = process.env.DISCORD_TOKEN;
 const CHANNEL_ID = process.env.CHANNEL_ID;
 const GENERAL_CHANNEL_ID = process.env.ANNOUNCEMENT_CHANNEL_ID || process.env.GENERAL_CHANNEL_ID || '';
 const LEADERS_CHANNEL_ID = process.env.LEADERS_CHANNEL_ID || '';
+const LS_NAME = process.env.LS_NAME || 'Fun Linkshell';
 const LS_ID = process.env.LS_ID || '303';
 const REFRESH_SECONDS = Number(process.env.REFRESH_SECONDS || 60);
 const COOKIE_HEADER = process.env.CATSEYE_COOKIE_HEADER || '';
@@ -271,7 +272,7 @@ function buildDashboard(overview, members) {
   else if (penalty === 0) statusLine = '🔥 PUSH WEEK ACTIVE';
 
   const header = [
-    '🏆 **FUN LINKSHELL AP BOARD**',
+    `🏆 **${LS_NAME.toUpperCase()} AP BOARD**`,
     '```',
     centerText(`RANK #${rank}`, 44),
     centerText(statusLine, 44),
@@ -303,7 +304,7 @@ async function findExistingDashboard(channel) {
   // Search recent bot messages and keep the newest dashboard. This prevents duplicate spam after redeploys.
   const messages = await channel.messages.fetch({ limit: 100 });
   const dashboards = messages
-    .filter(m => m.author.id === client.user.id && m.content.includes('FUN LINKSHELL AP BOARD'))
+    .filter(m => m.author.id === client.user.id && m.content.includes('AP BOARD'))
     .sort((a, b) => b.createdTimestamp - a.createdTimestamp);
 
   const newest = dashboards.first();
@@ -558,7 +559,7 @@ async function maybeSendVictoryMessage(overview, parts) {
 
     const msg = [
       '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
-      '🏆 **WE DID IT, FUN LINKSHELL!** 🏆',
+      `🏆 **WE DID IT, ${LS_NAME.toUpperCase()}!** 🏆`
       `📅 ${key}`,
       '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
       '',
