@@ -1,0 +1,15 @@
+{
+  "name": "ls-ap-report-bot",
+  "version": "1.9.0",
+  "description": "API-only Discord AP dashboard for CatsEyeXI linkshells.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "discord.js": "^14.16.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
