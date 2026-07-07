@@ -158,24 +158,15 @@ function penaltyFromCycleDate() {
 
 function getEffectivePenalty(overview, parts) {
   const summit = (overview || {}).summit || {};
-  const cyclePenalty = penaltyFromCycleDate();
 
-  // The website/API can show stale 0%, while the game itself reports the real
-  // win-streak penalty. The cycle date keeps the board correct after Rank #1.
-  if (cyclePenalty !== null) return cyclePenalty;
-
-  const apiPenalty = penaltyFromWins(summit.wins || 0);
-  const rank = Number(summit.rank || 0);
-  const raw = Number(summit.points || 0);
-  const scaled = Number(summit.scaledPoints || 0);
-  const participants = parts ? parts.participants.length : 0;
-
-  // Fallback for the immediate post-reset case.
-  if (apiPenalty === 0 && rank === 1 && raw === 0 && scaled === 0 && participants === 0) {
-    return 25;
+  // For SuperNova: trust CatsEye's current win-streak penalty by default.
+  // Use FORCE_PENALTY=0/5/15/25 in Render only if you ever need to manually override.
+  if (FORCE_PENALTY !== undefined && FORCE_PENALTY !== '') {
+    const forced = Number(FORCE_PENALTY);
+    if ([0, 5, 15, 25].includes(forced)) return forced;
   }
 
-  return apiPenalty;
+  return penaltyFromWins(summit.wins || 0);
 }
 
 function pushAdvice(penalty, rank) {
@@ -303,7 +294,7 @@ async function findExistingDashboard(channel) {
   // Search recent bot messages and keep the newest dashboard. This prevents duplicate spam after redeploys.
   const messages = await channel.messages.fetch({ limit: 100 });
   const dashboards = messages
-    .filter(m => m.author.id === client.user.id && m.content.includes('SUPERNOVA AP BOARD'))
+    .filter(m => m.author.id === client.user.id && m.content.includes('AP BOARD'))
     .sort((a, b) => b.createdTimestamp - a.createdTimestamp);
 
   const newest = dashboards.first();
